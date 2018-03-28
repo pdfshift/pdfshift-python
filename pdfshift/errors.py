@@ -3,9 +3,9 @@
 import time
 
 codes = {
-    'A401': 'InvalidApiKeyException',
-    'A403': 'NoCreditsException',
-    'S001': 'ServerException'
+    '401': 'InvalidApiKeyException',
+    '403': 'NoCreditsException',
+    '500': 'ServerException'
 }
 
 

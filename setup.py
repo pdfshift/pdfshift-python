@@ -65,7 +65,7 @@ setup(
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
 
-    keywords='html api pdfshift convert document',
+    keywords='html pdf api pdfshift convert document',
     packages=['requests'],
     install_requires=['requests'],
 

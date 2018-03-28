@@ -43,7 +43,7 @@ def _parse_response(response):
     except ValueError:
         raise errors.PDFShiftException(
             'Invalid response from the server.',
-            'S000'
+            500
         )
 
     if response.status_code == 200:
@@ -52,16 +52,16 @@ def _parse_response(response):
     if response.status_code == 429:
         raise errors.RateLimitException(response)
 
-    if body.get('code') == 'R400':
+    if body.get('code') == 400:
         if body.get('message', None):
-            raise errors.InvalidRequestException(body.get('message'))
+            raise errors.InvalidRequestException(body.get('error'))
 
         raise errors.InvalidRequestException(body.get('errors'))
 
-    if body.get('code') in errors.codes:
-        raise getattr(errors, errors.codes.get(body['code']))()
+    if str(body.get('code')) in errors.codes:
+        raise getattr(errors, errors.codes.get(str(body['code'])))()
 
-    raise errors.PDFShiftException('An unknown error occured.', 'S000')
+    raise errors.PDFShiftException('An unknown error occured.', 500)
 
 
 def convert(source, **kwargs):
@@ -78,6 +78,12 @@ def convert(source, **kwargs):
 
     if kwargs is None:
         kwargs = {}
+
+    if 'auth' in kwargs and isinstance(kwargs['auth'], list):
+        kwargs['auth'] = {
+            'username': kwargs['auth'][0],
+            'password': kwargs['auth'][1] if len(kwargs['auth']) > 1 else None
+        }
 
     kwargs['source'] = source
     response = requests.post(
