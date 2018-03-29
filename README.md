@@ -152,8 +152,9 @@ binary_file = pdfshift.convert(
     watermark={
         'source': 'https://pdfshift.io/static/static/img/logo.png',
         'offset_x': 50,
-        'offset_y': '100',
-        'rotate': 45
+        'offset_y': '100px',
+        'rotate': 45,
+        'background': true
     }
 )
 
