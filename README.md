@@ -53,7 +53,7 @@ with open('result.pdf', 'wb') as output:
 import pdfshift
 pdfshift.api_key = '120d8e8a86d2....................'
 
-document = open('page.html', 'r')
+document = open('invoice.html', 'r')
 document_content = document.read()
 document.close()
 
