@@ -33,7 +33,7 @@ from pdfshift import errors
 
 
 api_key = None
-api_base = 'https://pdfshift.io/v2'
+api_base = 'https://api.pdfshift.io/v2'
 
 
 def _parse_response(response):
