@@ -27,25 +27,19 @@ class PDFShiftException(Exception):
 class InvalidApiKeyException(PDFShiftException):
     def __init__(self):
         super(InvalidApiKeyException, self).__init__(
-            'Please indicate a valid API Key.',
-            'A401'
-        )
+            'Please indicate a valid API Key.', 401)
 
 
 class NoCreditsException(PDFShiftException):
     def __init__(self):
         super(NoCreditsException, self).__init__(
-            'No remaining credits left.',
-            'A403'
-        )
+            'No remaining credits left.', 403)
 
 
 class ServerException(PDFShiftException):
     def __init__(self):
         super(ServerException, self).__init__(
-            'A fatal error occured.',
-            'S001'
-        )
+            'A fatal error occured.', 500)
 
 
 # Custom exception classes
@@ -53,9 +47,7 @@ class ServerException(PDFShiftException):
 class RateLimitException(PDFShiftException):
     def __init__(self, response):
         super(RateLimitException, self).__init__(
-            'You have been rate limited.',
-            'R429'
-        )
+            'You have been rate limited.', 429)
 
         self.reset = int(response.headers.get('X-RateLimit-Reset')) - time.time()
 
