@@ -14,7 +14,7 @@ from os import path
 here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the README file
-with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
+with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 # Arguments marked as "Required" below must be included for upload to PyPI.
@@ -23,7 +23,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 setup(
     name='pdfshift',
     version='1.0.0b1',
-    licence='MIT',
+    license='MIT',
     description='Convert HTML documents to PDF using the PDFShift.io API.',
     long_description=long_description,
     url='https://pdfshift.io',
@@ -66,7 +66,6 @@ setup(
     ],
 
     keywords='html pdf api pdfshift convert document',
-    packages=['requests'],
     install_requires=['requests'],
 
     project_urls={

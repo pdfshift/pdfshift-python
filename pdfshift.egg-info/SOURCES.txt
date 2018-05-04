@@ -1,0 +1,8 @@
+README.md
+setup.cfg
+setup.py
+pdfshift.egg-info/PKG-INFO
+pdfshift.egg-info/SOURCES.txt
+pdfshift.egg-info/dependency_links.txt
+pdfshift.egg-info/requires.txt
+pdfshift.egg-info/top_level.txt

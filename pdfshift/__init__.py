@@ -37,20 +37,17 @@ api_base = 'https://api.pdfshift.io/v2'
 
 
 def _parse_response(response):
+    if response.status_code == 200:
+        return True
+
+    if response.status_code == 429:
+        raise errors.RateLimitException(response)
+
     body = None
     try:
         body = response.json()
     except ValueError:
-        raise errors.PDFShiftException(
-            'Invalid response from the server.',
-            500
-        )
-
-    if response.status_code == 200:
-        return body
-
-    if response.status_code == 429:
-        raise errors.RateLimitException(response)
+        raise errors.PDFShiftException('Invalid response from the server.', 500)
 
     if body.get('code') == 400:
         if body.get('message', None):
@@ -92,8 +89,8 @@ def convert(source, **kwargs):
         json=kwargs
     )
 
-    body = _parse_response(response)
-    return body.get('content').decode('base64')
+    _parse_response(response)
+    return response.raw
 
 
 def remaining_credits():
@@ -109,5 +106,5 @@ def remaining_credits():
         auth=(api_key, '')
     )
 
-    body = _parse_response(response)
-    return body.get('remaining')
+    _parse_response(response)
+    return response.json().get('remaining')
