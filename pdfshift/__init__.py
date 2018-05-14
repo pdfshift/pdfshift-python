@@ -17,9 +17,9 @@ Convert HTML documents to PDF using the PDFShift.io API.
 Usage:
 
     >>> import pdfshift
-    >>> pdfshift.api_key = '120d8e8a86d24c6daa604a9c14fd7c7f'
-    >>> binary_file = pdfshift.convert('https://www.example.com')
-    >>> with open('result.pdf', 'wb') as output:
+    >>> pdfshift.api_key = '120d8e8a86d2....................'
+    >>> binary_file = pdfshift.convert('https://pdfshift.io/documentation')
+    >>> with open('documentation.pdf', 'wb') as output:
     >>>     output.write(binary_file)
 
 `convert` function allows for many parameters.
@@ -29,6 +29,7 @@ https://pdfshift.io/documentation
 """
 
 import requests
+from io import BytesIO
 from pdfshift import errors
 
 
@@ -36,10 +37,7 @@ api_key = None
 api_base = 'https://api.pdfshift.io/v2'
 
 
-def _parse_response(response):
-    if response.status_code == 200:
-        return True
-
+def _handle_error(response):
     if response.status_code == 429:
         raise errors.RateLimitException(response)
 
@@ -86,11 +84,17 @@ def convert(source, **kwargs):
     response = requests.post(
         '{0}/convert/'.format(api_base),
         auth=(api_key, ''),
-        json=kwargs
+        json=kwargs,
+        stream=True
     )
 
-    _parse_response(response)
-    return response.raw
+    if response.status_code == 200:
+        result = BytesIO()
+        for chunk in response.iter_content(1024):
+            result.write(chunk)
+        return result.getvalue()
+    else:
+        return _handle_error(response)
 
 
 def remaining_credits():
@@ -106,5 +110,7 @@ def remaining_credits():
         auth=(api_key, '')
     )
 
-    _parse_response(response)
-    return response.json().get('remaining')
+    if response.status_code == 200:
+        return response.json().get('remaining')
+    else:
+        return _handle_error(response)
