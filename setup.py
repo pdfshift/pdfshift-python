@@ -22,7 +22,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='pdfshift',
-    version='1.0.0b1',
+    version='1.0.0b2',
     license='MIT',
     description='Convert HTML documents to PDF using the PDFShift.io API.',
     long_description=long_description,
