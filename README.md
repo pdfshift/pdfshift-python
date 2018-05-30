@@ -150,11 +150,10 @@ pdfshift.api_key = '120d8e8a86d2....................'
 binary_file = pdfshift.convert(
     'https://www.example.com',
     watermark={
-        'source': 'https://pdfshift.io/static/static/img/logo.png',
+        'image': 'https://pdfshift.io/static/img/logo.png',
         'offset_x': 50,
         'offset_y': '100px',
-        'rotate': 45,
-        'background': true
+        'rotate': 45
     }
 )
 
@@ -189,7 +188,6 @@ pdfshift.api_key = '120d8e8a86d2....................'
 binary_file = pdfshift.convert(
     'https://www.example.com',
     protection={
-        'encrypt': 128,
         'user_password': 'user',
         'owner_password': 'owner',
         'no_print': True
